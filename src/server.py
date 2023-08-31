@@ -11,17 +11,16 @@ class MyHandler(BaseHTTPRequestHandler):
         params = parse_qs(query_string)
         # Generate a hash of the parameters as filename
         hash = hashlib.md5(f"{params['text'][0]}{params['model'][0]}".encode()).hexdigest()
-        wav_file = f"/app/generated/{hash}.wav"
         # Check if a file already exists before generating one with piper
-        if not os.path.exists(wav_file):
+        if not os.path.exists(f"/app/generated/{hash}.mp3"):
             print(f"Generating file... {hash}.wav")
-            command = f"echo \"{params['text'][0]}\" | piper -f /app/generated/{hash}.wav -m {params['model'][0]}"
+            command = f"echo \"{params['text'][0]}\" | piper -f /app/generated/{hash}.mp3 -m {params['model'][0]}"
             subprocess.run(command, shell=True)
         # Return the filename after generation by piper
         self.send_response(200)
         self.send_header("Content-type", "text/plain")
         self.end_headers()
-        self.wfile.write(f"{hash}.wav".encode())
+        self.wfile.write(f"{hash}.mp3".encode())
         
 # Start the serverdc
 print("Starting server...")

@@ -8,3 +8,8 @@ Make a GET request with query parameters:
 - model: voice to use find the names [here](https://rhasspy.github.io/piper-samples/)
 
 You will get a response with the file name of the generated wav file, which you then can serve with a webserver of your choice.
+
+# Todo:
+
+- [ ] Old file purger
+- [ ] Fix datadir and download dir
